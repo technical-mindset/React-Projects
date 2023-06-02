@@ -10,6 +10,7 @@ function App() {
     
       <Routing />
       {/* <News setProgress={setProgress}  country={'in'} category={'sports'}/> */}
+    
 
     </>
   );
