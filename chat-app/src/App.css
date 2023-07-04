@@ -1,0 +1,96 @@
+body {
+background-color: #18191a;
+}
+
+
+.chatbox{
+  display: flex;
+}
+.me{
+  flex-direction: row-reverse;
+  /* flex-shrink: 3; */
+}
+.notme{
+  flex-direction: row;
+  /* flex-shrink: 3; */
+}
+.hover:hover{opacity: 0.9;}
+.dot{
+ border-radius: 100%;
+ height: 1px;
+ margin-top: 21px;
+}
+.chatImg{
+  border-radius:25%;
+  height: 50px;
+}
+.in{
+  position: fixed;
+  width: 100%;
+  bottom: -0.5%;
+  display: flex;
+  flex-direction: row;
+  background-color: #18191a;
+  /* height:10% */
+}
+
+textarea[type=text]{
+  resize: none;
+  overflow: hidden;
+  background-color: #212529;
+  text-align:left;
+  color: rgb(225, 213, 213);
+  border-color: #212529;
+  opacity: 1;
+  }
+
+  textarea[type=text]:focus, textarea[type=text]:active{
+    background-color: #212529;
+    outline-color: #18191a;
+    color: rgb(225, 213, 213);
+  }
+
+  textarea[type=text]::placeholder{
+    color: grey;
+  }
+
+.pad{
+  padding-bottom: 87px;
+  padding-top: 90px;
+}
+.padding{
+  padding-bottom: 87px;
+  padding-top: 2%;
+
+}
+.circle{
+  border-radius: 50% 50% 50% 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+.d-msg{
+  font-size:14px;
+}
+.shadow{
+  box-shadow: 10px 10px lightblue;
+}
+/* div[title]::after {
+  content: attr(title);
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+div[title]:hover::after {
+  visibility: visible;
+  opacity: 1;
+} */
+
+
+ 
