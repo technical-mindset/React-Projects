@@ -8,7 +8,7 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 
 
-export const setID = createAsyncThunk('setID', async ({ cUserId, oUserId }) => {
+export const setID = createAsyncThunk('setID', async ({ cUserId, oUserId }, {rejectWithValue}) => {
     const firestore = getFirestore();
     const UID1 = `${cUserId + oUserId}`;
     const UID2 = `${oUserId + cUserId}`;
@@ -26,9 +26,15 @@ export const setID = createAsyncThunk('setID', async ({ cUserId, oUserId }) => {
 
         return UID2;
     }
-    else {
+    else if (!chatSnapshot2.exists()) {
 
-        return null;
+        return rejectWithValue('Failed to fetch data');
+    
+    }
+    else if (!chatSnapshot1.exists()) {
+
+        return rejectWithValue('Failed to fetch data');
+    
     }
 });
 
@@ -41,12 +47,13 @@ const chatIdSlice = createSlice({
     name: 'chatId',
 
     initialState: {
-        ID: null
+        ID: null,
+        loading: false,
     },
     reducers: {
 
         setChatId(state, action) {
-            state.chatId = (action.payload);
+            state.ID = (action.payload);
         },
 
         removeChatId: (state) => {    
@@ -67,13 +74,16 @@ const chatIdSlice = createSlice({
             //         })
             .addCase(setID.pending, (state) => {
                 console.log("Pending");
+                state.loading = true;
             })
             .addCase(setID.fulfilled, (state, action) => {
                 state.ID = (action.payload);
-
+                state.loading = false;
             })
             .addCase(setID.rejected, (state) => {
                 console.log("Rejected");
+                state.loading = false;
+
             })
 
 

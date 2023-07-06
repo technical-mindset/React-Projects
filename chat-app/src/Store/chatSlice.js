@@ -17,7 +17,7 @@ export const getMessage = createAsyncThunk(
 
         const unsubscribe = onSnapshot(queryRef, (snapshot) => {
             snapshot.docChanges().forEach((change) => {
-                if (!change.doc.metadata.hasPendingWrites){
+                if (!snapshot.metadata.hasPendingWrites){
                 if (change.type === 'added') {
                     
                     const message = change.doc.data();

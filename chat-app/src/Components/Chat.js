@@ -6,7 +6,7 @@ import { userSelector } from '../Store/userSlice';
 import { useParams } from 'react-router-dom';
 import { getAuth } from 'firebase/auth'
 import { collection, doc, addDoc, getDoc, getFirestore, setDoc, serverTimestamp } from 'firebase/firestore';
-import { setID } from '../Store/chatIdSlice';
+import { removeChatId, setID } from '../Store/chatIdSlice';
 import { add, getMessage, remove } from '../Store/chatSlice';
 import Spinner from './Spinner';
 
@@ -14,7 +14,7 @@ import Spinner from './Spinner';
 const Chat = (props) => {
     const { id } = useParams();
     const item = useSelector((state) => state.chat);
-    // const isLoading = useSelector((state) => state.chat.loading);
+    const isLoading = useSelector((state) => state.chatId.loading);
     const user = useSelector(userSelector);
     const getID = useSelector((state) => state.chatId.ID);
 
@@ -109,6 +109,7 @@ const Chat = (props) => {
 
         window.addEventListener('popstate', () => {
             dispatch(remove());
+            dispatch(removeChatId());
         });
 
         // Cleanup the event listener when component unmounts
@@ -116,6 +117,8 @@ const Chat = (props) => {
             window.removeEventListener('popstate', () => {
 
                 dispatch(remove());
+                dispatch(removeChatId());
+
 
             });
         };
@@ -154,25 +157,31 @@ const Chat = (props) => {
 
                 <div className='pad'>
                     {
-                        getID ?
+                        isLoading ?
+                        (<div className='d-flex justify-content-center align-content-center my-5'>
 
-                            item.map((e, index) => {
+                        <Spinner width={`w-25`} />
+
+                    </div>):
+                            (item.map((e, index) => {
 
 
-                                return (<Bubble key={index} name={e.name} me={e.uid === user.uid ? 'me' : 'notme'}
-                                    color={e.uid === user.uid ? 'primary' : 'success'}
-                                    msg={e.msg} />)
+                                return (
+                                    <Bubble
+                                        key={index}
+                                        name={e.name}
+                                        me={e.uid === user.uid ? 'me' : 'notme'}
+                                        color={e.uid === user.uid ? 'primary' : 'success'}
+                                        msg={e.msg} />
+                                )
 
-                            })
-                            :
-                            <div className='d-flex justify-content-center align-content-center my-5'>
-
-                            <Spinner width={`w-25`} />
-
-                            </div>
+                            }))
+                            
+                           
                     }
                 </div>
                 <div className='in p-3 my-1'>
+
                     <div className="input-group d-flex h">
                         <textarea type="text" className="form-control p-2" placeholder="Type a message ...."
                             value={chat} onChange={e => setChat(e.target.value)} />
