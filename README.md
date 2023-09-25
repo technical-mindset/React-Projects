@@ -9,4 +9,4 @@
 
 
 # (3) Hosted Link Of My News App
-fake-news-app.netlify.app
+'fake-news-app.netlify.app'
